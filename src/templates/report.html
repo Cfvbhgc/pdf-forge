@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{title}}</title>
+  <style>
+    /* ===================================================================
+       Report Template — Inline Styles
+       ===================================================================
+       Professional multi-section report with a title block, content
+       sections, and a summary callout.  All styles are embedded so
+       the PDF renders without network access.
+       =================================================================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 14px;
+      color: #1e293b;
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    .report-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    /* -- Title page header -- */
+    .report-header {
+      background: linear-gradient(135deg, #0f766e, #14b8a6);
+      color: #ffffff;
+      padding: 52px 48px 44px 48px;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .report-header h1 {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .report-meta {
+      display: flex;
+      gap: 28px;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    .report-meta .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .report-meta .meta-label {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    /* -- Decorative divider between header and body -- */
+    .divider {
+      height: 4px;
+      background: linear-gradient(90deg, #0f766e, #14b8a6, #99f6e4);
+      margin: 0;
+    }
+
+    /* -- Content area -- */
+    .report-body {
+      padding: 36px 48px;
+    }
+
+    /* -- Summary callout box -- */
+    .summary-box {
+      background: #f0fdfa;
+      border-left: 4px solid #14b8a6;
+      padding: 22px 28px;
+      margin-top: 8px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .summary-box h2 {
+      font-size: 18px;
+      color: #0f766e;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .summary-box p {
+      font-size: 14px;
+      color: #334155;
+      line-height: 1.7;
+    }
+
+    /* -- Footer -- */
+    .report-footer {
+      margin: 20px 48px 0 48px;
+      padding: 16px 0;
+      border-top: 1px solid #e2e8f0;
+      font-size: 12px;
+      color: #94a3b8;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="report-wrapper">
+
+    <!-- ============================================================= -->
+    <!-- Title header — report name, author, and date                  -->
+    <!-- ============================================================= -->
+    <div class="report-header">
+      <h1>{{title}}</h1>
+      <div class="report-meta">
+        <div class="meta-item">
+          <span class="meta-label">Author:</span>
+          <span>{{author}}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Date:</span>
+          <span>{{date}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- Accent divider bar                                            -->
+    <!-- ============================================================= -->
+    <div class="divider"></div>
+
+    <!-- ============================================================= -->
+    <!-- Report sections — each heading + content block is generated   -->
+    <!-- by the template engine from the sections array.               -->
+    <!-- ============================================================= -->
+    <div class="report-body">
+      {{sectionsHtml}}
+
+      <!-- =========================================================== -->
+      <!-- Executive summary callout                                   -->
+      <!-- =========================================================== -->
+      <div class="summary-box">
+        <h2>Executive Summary</h2>
+        <p>{{summary}}</p>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- Footer                                                        -->
+    <!-- ============================================================= -->
+    <div class="report-footer">
+      {{title}} &mdash; Confidential &mdash; {{date}}
+    </div>
+
+  </div>
+</body>
+</html>

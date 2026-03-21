@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice — {{invoiceNumber}}</title>
+  <style>
+    /* ===================================================================
+       Invoice Template — Inline Styles
+       ===================================================================
+       All styles are inline/embedded so the PDF renders identically
+       regardless of network access (no external stylesheets).
+       =================================================================== */
+
+    /* -- Reset & base typography -- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 14px;
+      color: #1e293b;
+      background: #ffffff;
+      line-height: 1.5;
+    }
+
+    /* -- Page wrapper -- */
+    .invoice-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    /* -- Header with brand colour -- */
+    .invoice-header {
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      color: #ffffff;
+      padding: 40px 44px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .invoice-header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .invoice-header .invoice-number {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-top: 6px;
+    }
+
+    .invoice-header .invoice-badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    /* -- Addresses block -- */
+    .addresses {
+      display: flex;
+      justify-content: space-between;
+      padding: 32px 44px;
+      gap: 40px;
+    }
+
+    .addresses .block {
+      flex: 1;
+    }
+
+    .addresses .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #94a3b8;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .addresses .name {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .addresses .detail {
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    /* -- Items table -- */
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 44px;
+      /* Slightly narrower than the wrapper to respect padding. */
+      width: calc(100% - 88px);
+    }
+
+    .items-table thead th {
+      background: #f1f5f9;
+      padding: 12px 16px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #475569;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .items-table thead th:nth-child(3) { text-align: center; }
+    .items-table thead th:nth-child(4),
+    .items-table thead th:nth-child(5) { text-align: right; }
+
+    /* -- Totals section -- */
+    .totals {
+      display: flex;
+      justify-content: flex-end;
+      padding: 24px 44px 0 44px;
+    }
+
+    .totals-table {
+      width: 280px;
+    }
+
+    .totals-table .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 14px;
+      color: #475569;
+    }
+
+    .totals-table .row.total {
+      border-top: 2px solid #1e40af;
+      margin-top: 6px;
+      padding-top: 12px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #1e40af;
+    }
+
+    /* -- Footer / notes -- */
+    .invoice-footer {
+      margin: 36px 44px 0 44px;
+      padding: 20px 0;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .invoice-footer .due-date {
+      font-size: 14px;
+      color: #475569;
+      margin-bottom: 10px;
+    }
+
+    .invoice-footer .due-date strong {
+      color: #1e40af;
+    }
+
+    .invoice-footer .notes {
+      font-size: 13px;
+      color: #94a3b8;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice-wrapper">
+
+    <!-- ============================================================= -->
+    <!-- Header — company branding and invoice badge                    -->
+    <!-- ============================================================= -->
+    <div class="invoice-header">
+      <div>
+        <h1>INVOICE</h1>
+        <div class="invoice-number">{{invoiceNumber}}</div>
+      </div>
+      <div class="invoice-badge">DUE: {{dueDate}}</div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- From / To addresses                                            -->
+    <!-- ============================================================= -->
+    <div class="addresses">
+      <div class="block">
+        <div class="label">From</div>
+        <div class="name">{{companyName}}</div>
+        <div class="detail">{{companyAddress}}</div>
+        <div class="detail">{{companyEmail}}</div>
+        <div class="detail">{{companyPhone}}</div>
+      </div>
+      <div class="block">
+        <div class="label">Bill To</div>
+        <div class="name">{{clientName}}</div>
+        <div class="detail">{{clientAddress}}</div>
+        <div class="detail">{{clientEmail}}</div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- Line items table                                               -->
+    <!-- ============================================================= -->
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th style="width: 40px;">#</th>
+          <th>Description</th>
+          <th style="width: 70px;">Qty</th>
+          <th style="width: 110px;">Unit Price</th>
+          <th style="width: 110px;">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{itemsHtml}}
+      </tbody>
+    </table>
+
+    <!-- ============================================================= -->
+    <!-- Totals — subtotal, tax, grand total                           -->
+    <!-- ============================================================= -->
+    <div class="totals">
+      <div class="totals-table">
+        <div class="row">
+          <span>Subtotal</span>
+          <span>${{subtotal}}</span>
+        </div>
+        <div class="row">
+          <span>Tax ({{tax}}%)</span>
+          <span>${{taxAmount}}</span>
+        </div>
+        <div class="row total">
+          <span>Total</span>
+          <span>${{total}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- Footer — due date reminder and notes                          -->
+    <!-- ============================================================= -->
+    <div class="invoice-footer">
+      <div class="due-date">Payment due by <strong>{{dueDate}}</strong></div>
+      <div class="notes">{{notes}}</div>
+    </div>
+
+  </div>
+</body>
+</html>
