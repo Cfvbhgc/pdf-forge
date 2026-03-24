@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificate — {{recipientName}}</title>
+  <style>
+    /* ===================================================================
+       Certificate Template — Inline Styles
+       ===================================================================
+       Elegant, formal certificate of completion with a decorative border,
+       centred layout, and ornamental touches.  Designed for landscape A4
+       but works in portrait too.
+       =================================================================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 14px;
+      color: #1e293b;
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* -- Outer decorative border -- */
+    .certificate-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 12px;
+    }
+
+    .certificate-border {
+      border: 3px solid #b8860b;
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    .certificate-inner {
+      border: 1px solid #daa520;
+      padding: 52px 56px;
+      text-align: center;
+      position: relative;
+    }
+
+    /* -- Decorative corner accents (CSS-only) -- */
+    .certificate-inner::before,
+    .certificate-inner::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-color: #b8860b;
+      border-style: solid;
+    }
+
+    .certificate-inner::before {
+      top: 12px;
+      left: 12px;
+      border-width: 3px 0 0 3px;
+    }
+
+    .certificate-inner::after {
+      bottom: 12px;
+      right: 12px;
+      border-width: 0 3px 3px 0;
+    }
+
+    /* -- Header ornament -- */
+    .ornament {
+      font-size: 28px;
+      color: #b8860b;
+      letter-spacing: 8px;
+      margin-bottom: 8px;
+    }
+
+    /* -- "Certificate of Completion" title -- */
+    .certificate-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      font-weight: 700;
+    }
+
+    .certificate-main-title {
+      font-size: 36px;
+      color: #1e3a5f;
+      font-weight: 700;
+      margin-bottom: 28px;
+      letter-spacing: 2px;
+    }
+
+    /* -- "This is presented to" -- */
+    .presented-to {
+      font-size: 13px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* -- Recipient name (the star of the show) -- */
+    .recipient-name {
+      font-size: 42px;
+      color: #1e3a5f;
+      font-weight: 700;
+      font-style: italic;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #daa520;
+      display: inline-block;
+    }
+
+    /* -- Course/programme name -- */
+    .course-name {
+      font-size: 20px;
+      color: #b8860b;
+      font-weight: 700;
+      margin: 20px 0 12px 0;
+      letter-spacing: 1px;
+    }
+
+    /* -- Description paragraph -- */
+    .certificate-description {
+      font-size: 14px;
+      color: #475569;
+      max-width: 580px;
+      margin: 0 auto 32px auto;
+      line-height: 1.8;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* -- Signature / issuer area -- */
+    .signature-area {
+      display: flex;
+      justify-content: center;
+      gap: 100px;
+      margin-top: 36px;
+    }
+
+    .signature-block {
+      text-align: center;
+      min-width: 180px;
+    }
+
+    .signature-line {
+      width: 100%;
+      border-top: 2px solid #1e3a5f;
+      margin-bottom: 8px;
+    }
+
+    .signature-label {
+      font-size: 12px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    .signature-name {
+      font-size: 15px;
+      color: #1e3a5f;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    /* -- Certificate ID -- */
+    .certificate-id {
+      margin-top: 28px;
+      font-size: 11px;
+      color: #94a3b8;
+      letter-spacing: 2px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="certificate-wrapper">
+    <div class="certificate-border">
+      <div class="certificate-inner">
+
+        <!-- =========================================================== -->
+        <!-- Decorative ornament                                         -->
+        <!-- =========================================================== -->
+        <div class="ornament">&#10038; &#10038; &#10038;</div>
+
+        <!-- =========================================================== -->
+        <!-- Title block                                                 -->
+        <!-- =========================================================== -->
+        <div class="certificate-title">Certificate of Completion</div>
+        <div class="certificate-main-title">CERTIFICATE</div>
+
+        <!-- =========================================================== -->
+        <!-- Presented-to line and recipient name                        -->
+        <!-- =========================================================== -->
+        <div class="presented-to">This certificate is proudly presented to</div>
+        <div class="recipient-name">{{recipientName}}</div>
+
+        <!-- =========================================================== -->
+        <!-- Course / programme name                                     -->
+        <!-- =========================================================== -->
+        <div class="course-name">{{courseName}}</div>
+
+        <!-- =========================================================== -->
+        <!-- Description of what was achieved                            -->
+        <!-- =========================================================== -->
+        <p class="certificate-description">
+          {{description}}
+        </p>
+
+        <!-- =========================================================== -->
+        <!-- Signature area — issuer and date                            -->
+        <!-- =========================================================== -->
+        <div class="signature-area">
+          <div class="signature-block">
+            <div class="signature-name">{{issuer}}</div>
+            <div class="signature-line"></div>
+            <div class="signature-label">{{issuerTitle}}</div>
+          </div>
+          <div class="signature-block">
+            <div class="signature-name">{{date}}</div>
+            <div class="signature-line"></div>
+            <div class="signature-label">Date</div>
+          </div>
+        </div>
+
+        <!-- =========================================================== -->
+        <!-- Certificate ID for verification                             -->
+        <!-- =========================================================== -->
+        <div class="certificate-id">{{certificateId}}</div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

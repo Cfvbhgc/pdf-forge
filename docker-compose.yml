@@ -1,0 +1,52 @@
+# =============================================================================
+# PDF Forge — Docker Compose
+# =============================================================================
+# Orchestrates the PDF Forge service in a single container. This file is
+# intentionally simple because the application is self-contained (no database
+# or external services required).
+#
+# Usage:
+#   docker compose up --build        # build & start in foreground
+#   docker compose up -d --build     # build & start in background
+#   docker compose down              # stop & remove containers
+#   docker compose logs -f pdf-forge # tail logs
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # pdf-forge — the main application container
+  # ---------------------------------------------------------------------------
+  pdf-forge:
+    # Build from the Dockerfile in the project root.
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # Container name for easy identification in `docker ps`.
+    container_name: pdf-forge
+
+    # Map host port 3003 → container port 3003.
+    ports:
+      - "3003:3003"
+
+    # Environment variables injected at runtime.
+    # These override the defaults in .env.example / src/config/*.
+    environment:
+      - NODE_ENV=production
+      - PORT=3003
+      - CHROMIUM_PATH=/usr/bin/chromium
+      - PUPPETEER_NO_SANDBOX=true
+      - PDF_FORMAT=A4
+      - PDF_PRINT_BACKGROUND=true
+
+    # Restart policy: always restart unless explicitly stopped.
+    restart: unless-stopped
+
+    # Resource limits to prevent Chromium from consuming all host memory.
+    # Adjust these based on your expected concurrency.
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
